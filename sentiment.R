@@ -1,6 +1,6 @@
-install.packages('tidytext')
-install.packages('wordcloud2')
-install.packages('sentimentr')
+#install.packages('tidytext')
+#install.packages('wordcloud2')
+#install.packages('sentimentr')
 
 library(ggplot2)
 library(dplyr)
@@ -10,6 +10,8 @@ library(wordcloud2)
 library(sentimentr)
 library(lubridate)
 
+survey <- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1W9eGIihIHppys3LZe5FNbUuaIi_tfdscIq521lidRBU/edit?usp=sharing')
+View(survey)
 
 
 
