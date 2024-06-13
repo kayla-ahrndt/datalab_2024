@@ -18,8 +18,9 @@ head(survey)
   #people and their answers!
 
 #Create a variable named date_time in your survey data. This should be based on the Timestamp variable. Use the mdy_hms variable to created a “date-time” object.
-date_time <- ymd_hms(survey$Timestamp) %>% as.numeric() %>% 
-  mutate(date_time = )
+date_time <- survey %>% 
+  mutate(date_time = mdy_hms(Timestamp))
+date_time
 
 #Create a visualization of the date_time variable.
 
@@ -44,16 +45,18 @@ words
   #names, numbers, words
 
 #Look up the help documentation for the function wordcloud2. What does it expect as the first argument of the function?
-
+  #dataframe
 
 #Create a dataframe named word_freq. This should be a dataframe which is conformant with the expectation of wordcloud2, showing how frequently each word appeared in our feelings.
 word_freq <- words %>%  group_by(word) %>%  tally()
+word_freq
 
 #Make a word cloud.
+wordcloud2(word_freq)
 
 #Create an object named 'sw'.
 sw <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/stopwords.csv')
-
+View(sw)
 
 
 
