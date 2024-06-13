@@ -1,0 +1,263 @@
+#install.packages('lubridate')
+
+#load in libraries
+library(lubridate)
+library(dplyr)
+
+# module 10!!!
+
+#Get today's date
+today()
+
+#Then make today into an object called today.
+today <- today()
+
+#Birthday variables
+my_birthday <- '2002-09-14'
+my_partners_bday_1 <- '2002-08-02'
+my_partners_bday_2 <- '1999-10-20'
+
+str(my_birthday)
+#chr "2002-09-14"
+str(today)
+  #Date[1:1], format: "2024-06-06"
+
+#class type of the variable impacts what you can do with the text
+today - my_birthday
+  #Error in unclass(as.Date(e1)) - e2 : non-numeric argument to binary operator
+
+#change the datatype of my_birthday 
+my_birthday <- as_date(my_birthday)
+my_birthday
+
+#rerun after datatype change
+today - my_birthday
+  #Time difference of 7936 days
+
+#Convert my_partners_bday to the right class, then calculate the time between your birthdays
+  #most recent - previous
+my_partners_bday_1 <- as_date(my_partners_bday_1)
+my_partners_bday_1
+my_partners_bday_2 <- as_date(my_partners_bday_2)
+my_partners_bday_2
+my_partners_bday_1  - my_birthday
+  #Time difference of -43 days
+my_birthday - my_partners_bday_1
+  #Time difference of 43 days
+my_birthday - my_partners_bday_2
+  #Time difference of 1060 days
+
+#add and subtract time to datetime object
+n <- now()
+n
+  #"2024-06-06 09:30:26 CDT"
+
+#add or subtract seconds to now:
+n + seconds(1)
+  #"2024-06-06 09:30:27 CDT"
+n - hours(5)
+  #"2024-06-06 04:30:26 CDT"
+
+#date of now
+as_date(n)
+
+#time from the creation of now to later
+later <- now()
+later
+  #"2024-06-06 09:31:56 CDT"
+later - n
+  #Time difference of 5.451524 mins
+
+#The following functions convert a character with a particular format into a standard datetime object:
+ymd("2017-01-31")
+  #"2017-01-31"
+
+#This also works if the single-digit dates are not padded with a 0:
+ymd("2017-1-31")
+  #"2017-01-31"
+
+#Try to find a way to make the following into date formats:
+  #Hint: try re-organising the letters from ymd which stands for “year month day”.
+ydm("2017-31-01")
+  #"2017-01-31"
+mdy("January 31st, 2017")
+  #"2017-01-31"
+dmy("31-Jan-2017")
+  #"2017-01-31"
+
+#extracting information
+datetime <- ymd_hms("2016-07-08 12:34:56")
+year(datetime)
+  #2016
+
+#get the month
+month(datetime)
+  #7
+
+#get the day of the month
+mday(datetime)
+  #8
+
+#get the day of the year
+yday(datetime)
+  #190
+
+#get the day of the week
+wday(datetime)
+  #6
+
+#get the name of the day of the week
+weekdays(datetime)
+  #"Friday"
+
+#get the hour of the day
+hour(datetime)
+  #12
+
+#get the minute of the hour
+minute(datetime)
+  #34
+
+#get the seconds of the minutes
+second(datetime)
+  #56
+
+# adjust timezones for dates
+#Today's date where I am:
+today()
+  #"2024-06-06"
+#Today's date in New Zealand:
+today( tzone = 'NZ' )
+  #"2024-06-07"
+
+# adjust time zones for date-times:
+#Time where I am:
+now()
+  #"2024-06-06 09:49:26 CDT"
+#Time in UTC / GMT (which are synonymous):
+now('UTC')
+  #"2024-06-06 14:49:44 UTC"
+now('GMT')
+  #"2024-06-06 14:49:56 GMT"
+
+#timezone where your computer is working in:
+Sys.timezone()
+  #America/Chicago
+
+#list of timezones accepted in R:
+OlsonNames() %>% head(50)
+
+# If you ever need to force the timezone of a datetime object to change without actually changing the date or time, use the function force_tz():
+#Get current time in UTC/GMT:
+n <- now('UTC')
+n
+  #"2024-06-06 14:51:31 UTC"
+#Change timezone to Central Standard Time without changing time:
+force_tz(n, tzone='America/Chicago')
+  #"2024-06-06 14:51:31 CDT"
+
+# One way to avoid timezone issues is to convert a datetime object to a numeric timestamp. Timestamps record the number of seconds that have passed since midnight GMT on January 1, 1970. It doesn’t matter which timezone you are standing in the seconds that have passed since that moment will be the same
+#Time where I am:
+now() %>% as.numeric()
+  #1717685673
+#Convert from a timestamp back into a datetimeobject:
+#convert timestamp
+ts <- now() %>% as.numeric()
+ts
+  #1717685735
+#convert back to datetime object
+ts %>%  as_datetime()
+  #"2024-06-06 14:55:34 UTC"
+
+# exercises!!!
+
+#Use the appropriate lubridate function to parse each of the following dates (aka make each of the following strings into dates):
+mdy('January 1, 2010')
+  #"2010-01-01"
+ymd('2015-Mar-07')
+  #"2015-03-07"
+dmy('06-Jun-2017')
+  #"2017-06-06"
+mdy(c('August 19 (2015)', 'July 1 (2015)'))
+  #"2015-08-19" "2015-07-01"
+mdy('12/30/14')
+  #"2014-12-30"
+
+#Work with this date
+dt <- '2000-01-04 03:43:01'
+dt %>%  as_datetime()
+
+#Make a variable with the following name with the corresponding information using the date above:
+#raw (containing the original string)
+dt <- dt
+dt
+  #"2000-01-04 03:43:01"
+#year
+year(dt)
+  #2000
+#month
+month(dt)
+  #1
+#dom(day of month)
+mday(dt)
+  #4
+#doy (day of year)
+yday(dt)
+  #4
+#hour
+hour(dt)
+  #3
+#minutes
+minute(dt)
+  #43
+#seconds
+second(dt)
+  #1
+
+#Now calculate two more variables:
+#timestamp
+ts <- ymd_hms(dt) %>% as.numeric()
+ts
+  #946957381
+#diff(the difference, in days, between this time and midnight GMT on January 1, 1970)
+dt <- as_date(dt) %>% force_tz("GMT")
+jan1970 <- as_date("1970-01-01") %>% force_tz("GMT")
+diff <- dt - jan1970
+diff
+  #Time difference of 10960 days
+diff <- diff %>% as.numeric()
+diff
+  #10960
+
+#Write code to say what time it is in the timezone that you were born in.
+now('America/Chicago')
+  #"2024-06-06 10:57:22 CDT"
+
+#Calculate your age using your birthday and today’s date in years. In days! In seconds!!
+#days
+today <- as_date(now())
+today
+my_birthday
+today - my_birthday
+  #Time difference of 7936 days
+#seconds
+ts <- now() %>% as.numeric()
+ts
+my_birthday <- my_birthday %>% as.numeric()
+my_birthday
+#11944
+
+7936*24*60*90
+#1028505600 seconds
+
+#How many seconds have occurred since the Armistice Day?
+
+
+
+
+
+
+
+
+
+
