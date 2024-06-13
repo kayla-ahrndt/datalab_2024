@@ -1,0 +1,16 @@
+install.packages('tidytext')
+install.packages('wordcloud2')
+install.packages('sentimentr')
+
+library(ggplot2)
+library(dplyr)
+library(tidytext)
+library(gsheet)
+library(wordcloud2)
+library(sentimentr)
+library(lubridate)
+
+
+
+
+
