@@ -23,6 +23,8 @@ date_time <- survey %>%
 date_time
 
 #Create a visualization of the date_time variable.
+ggplot(data = date_time, aes(x = date_time)) +
+  geom_histogram() 
 
 #Create an object called sentiments by running the following:
 sentiments <- get_sentiments('bing')

@@ -1,26 +1,26 @@
 {
-    "id": "F1C394F3",
-    "path": "C:/Users/kayla/OneDrive/Desktop/kaylaahrndt_datalab2024/week2/dates_and_times.R",
+    "id": "31B7405B",
+    "path": "C:/Users/kayla/OneDrive/Desktop/kaylaahrndt_datalab2024/week1/ggplot.R",
     "project_path": null,
     "type": "r_source",
-    "hash": "4018050513",
+    "hash": "995337849",
     "contents": "",
     "dirty": false,
-    "created": 1718303557357.0,
+    "created": 1718305351610.0,
     "source_on_save": false,
-    "relative_order": 7,
+    "relative_order": 2,
     "properties": {
         "source_window_id": "",
         "Source": "Source",
-        "cursorPosition": "218,34",
-        "scrollLine": "211"
+        "cursorPosition": "101,25",
+        "scrollLine": "86"
     },
     "folds": "",
-    "lastKnownWriteTime": 1717690168,
+    "lastKnownWriteTime": 1718305757,
     "encoding": "UTF-8",
     "collab_server": "",
     "source_window": "",
-    "last_content_update": 1717690168,
+    "last_content_update": 1718305757125,
     "read_only": false,
     "read_only_alternatives": []
 }
