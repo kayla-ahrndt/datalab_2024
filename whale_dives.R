@@ -46,7 +46,7 @@ names(messy_dives2) <- c(
   'surface.time', # "Surfacetime", 
   'blow.interval', # "Blow.Interval", 
   'blow.number' # "Blow_number_count"
-  )
+)
 View(messy_dives2)
 
 #get rid of all NAs
@@ -59,7 +59,7 @@ messy_dives2 <- messy_dives2 %>% distinct()
 messy_dives2
 
 #get rid of all non- hw or fw species
-  #%in% for multiple filters or group_by
+#%in% for multiple filters or group_by
 messy_dives2 <- messy_dives2 %>% 
   filter(behavior %in% c('FEED', 'OTHER')) %>% 
   filter(species %in% c('FW', 'HW')) 
