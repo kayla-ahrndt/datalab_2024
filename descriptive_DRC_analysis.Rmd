@@ -108,7 +108,7 @@ df_research <- df_research %>%
   mutate(neonatology_admission_baby_2 = tolower(neonatology_admission_baby_2)) %>% 
   # filter out entries that are wrong
   filter(neonatology_admission_baby_2 != 'bb lusamba mukeba') %>% 
-  filter(neonatology_admission_baby_1 != 'yes\nno') %>% 
+  filter(neonatology_admission_baby_2 != 'yes\nno') %>% 
   # edit the cases that seem fixable
   mutate(neonatology_admission_baby_2 = case_when(
     neonatology_admission_baby_2 == 'oiui' ~ 'oui',
@@ -124,10 +124,40 @@ df_research %>%
 
 ```
 
+<!---   neonatology_admission_baby_1
+  #was submitted to neonatology: 27
+  #was not submitted to neonatology: 19 --->
+In single child births, 27 children were submitted to neonatology and 19 were not. 
 
+<!---   neonatology_admission_baby_1
+  #was submitted to neonatology: 30
+  #was not submitted to neonatology: 16 --->
+In twin births, 30 children were submitted to neonatology and 16 were not. 
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 
 # download data
-df <- read_csv('https://mbrudd.com/drc_data/DRC_data_v3.csv')
+df2 <- read_csv('https://mbrudd.com/drc_data/DRC_data_v3.csv')
+View(df2)
+
+# How many women had malaria during pregnancy?
+table(df2$malaria_diagnosis)
+
+df_research <- df_research %>% 
+  # lower all the words in the column
+  mutate(malaria_diagnosis = tolower(malaria_diagnosis)) %>% 
+  # filter out entries that are wrong
+  filter(malaria_diagnosis != 'oui\nnon') %>% 
+  filter(malaria_diagnosis != 'non reporté') %>% 
+  # edit the cases that seem fixable
+  mutate(malaria_diagnosis = case_when(
+    malaria_diagnosis == 'OUI' ~ 'oui',
+    TRUE ~ malaria_diagnosis
+  ))
+
+```
+
 
 
 
