@@ -1,0 +1,73 @@
+---
+title: "KEMRI"
+author: "Kayla Ahrndt"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+#load in libraries
+library(sf)
+library(rnaturalearth)
+library(remotes)
+library(rnaturalearthhires)
+library(rnaturalearthdata)
+library(tmap)
+library(osmdata)
+library(tidycensus)
+library(dplyr)
+library(readr)
+
+# download data
+df <- read_csv('https://mbrudd.com/drc_data/DRC_data.csv')
+View(df)
+
+# making a map of the DRC
+drc <- ne_countries( country = "Democratic Republic of the Congo", returnclass = "sf" )
+
+# making multipolygon
+drc$geometry
+
+#from tmap; picture of drc, plots
+tmap_mode('view') 
+tm_shape(drc) + 
+  tm_polygons()
+
+#get a good background:
+tmap_options(basemaps = providers$OpenStreetMap) 
+
+#make a map of drc with a nice transparency setting:
+tm_shape(drc) + 
+  tm_polygons(alpha = 0.3)
+
+#drc district map
+drc_states <- ne_states(country = "Democratic Republic of the Congo", returnclass = "sf")
+tm_shape(drc_states) + 
+  tm_polygons(alpha = 0.3)
+
+```
+
+<!-- Dear team, -->
+<!-- Today, we received some data from a PhD student from the Democratic Republic of the Congo. She has been collecting data over the past 2 years on a small subset of kids submitted to neonatology. Her supervisor has requested you to look at some of the following: -->
+
+<!--   - outcome of delivery (baby is okay and if baby was admitted to nenotolagy) -->
+<!--   - malaria during pregnancy -->
+<!--   - weight, height and apgar -->
+<!--   - completeness of variables -->
+<!--   - numbers of variables -->
+<!--   - the mean age of women -->
+<!--   - number of kids submitted to icu/neonatology -->
+<!--   - who went to clinic and who did not go to clinic -->
+<!--   - how many had a single or double or triple delivery -->
+<!--   - mean birth weight and height and range & mean apgar and range -->
+<!--   - difference time of when delivery was made (day vs. night) -->
+
+<!-- Overall, the client has requested a neonatology descriptive paper. Please send me an update once a week so that I can see how you are progressing, but I am excited to see the final product in 4 weeks time.  -->
+<!-- Many thanks, -->
+<!-- Your super cool and suave boss -->
+
+
+
+

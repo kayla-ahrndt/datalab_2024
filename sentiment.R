@@ -9,6 +9,7 @@ library(gsheet)
 library(wordcloud2)
 library(sentimentr)
 library(lubridate)
+library(tidyverse)
 
 survey <- gsheet::gsheet2tbl('https://docs.google.com/spreadsheets/d/1W9eGIihIHppys3LZe5FNbUuaIi_tfdscIq521lidRBU/edit?usp=sharing')
 View(survey)
@@ -50,7 +51,9 @@ words
   #dataframe
 
 #Create a dataframe named word_freq. This should be a dataframe which is conformant with the expectation of wordcloud2, showing how frequently each word appeared in our feelings.
-word_freq <- words %>%  group_by(word) %>%  tally()
+word_freq <- words %>%  
+  group_by(word) %>%  
+  tally()
 word_freq
 
 #Make a word cloud.
@@ -60,11 +63,30 @@ wordcloud2(word_freq)
 sw <- read_csv('https://raw.githubusercontent.com/databrew/intro-to-data-science/main/data/stopwords.csv')
 View(sw)
 
+#What is the sw object all about? Explore it a bit.
+  #joining words!
 
+#Remove from word_freq any rows in which the word appears in 'sw'
+word_freq <- word_freq %>% 
+  filter(!word %in% sw$word)
+word_freq
 
+#Make a new word cloud 
+wordcloud2(word_freq)
 
+#Make an object with the top 10 words used only. Name this object top10
+top10 <- word_freq %>% 
+  arrange(word_freq == 10)
+top10
 
-
+  
+  
+  
+  
+  
+  
+  
+  
 
 
 
