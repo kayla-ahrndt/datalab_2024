@@ -16,15 +16,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 <!--- this is a comment --->
 
-Globally 2.3 million children died in the first 20 days of life in 2022. There are approximately  newborn deaths every day, amounting to _% of all child deaths under the age of 5 years (WHO, 2024)[https://www.who.int/news-room/fact-sheets/detail/newborn-mortality].
+Globally 2.3 million children died in the first 20 days of life in 2022. There are approximately 6,500 newborn deaths every day, amounting to 47% of all child deaths under the age of 5 years (WHO, 2024)[https://www.who.int/news-room/fact-sheets/detail/newborn-mortality].
 
-Up to _ of newborn deaths can be prevented if known and if effective health measures are provided at birth and during the first week of life. The vast majority of newborn deaths take place in developing countries where access to health care is low. Most of these newborns die at home, without skilled care that could greatly increase their chances for survival (WHO)[https://www.afro.who.int/health-topics/newborn].
+Up to two thirds of newborn deaths can be prevented if known and if effective health measures are provided at birth and during the first week of life. The vast majority of newborn deaths take place in developing countries where access to health care is low. Most of these newborns die at home, without skilled care that could greatly increase their chances for survival (WHO)[https://www.afro.who.int/health-topics/newborn].
 
 Malaria is common during pregnancy and can have serious consequences for neonatal health. Neonatal morbidity and mortality can be significantly reduced by proper implementation of insecticide-treated nets and intermittent preventive treatment (source)[https://pubmed.ncbi.nlm.nih.gov/21118620/].
 
 The WHO African Region carries a disproportionately high share of the global malaria burden. In 2022, the Region was home to 94% of malaria cases (233 million) and 95% (580,000) of malaria deaths. DRC Congo accounted for 12% of all malaria in the world in 2022.
 
-DRC is one of the poorest countries in the world (source)[https://www.cia.gov/the-world-factbook/countries/congo-democratic-republic-of-the/]. The health care system in DRC is highly dependent of private actors. Care-seeking and treatment for malaria in the private sector (including non-profit and faith-based facilities, for-profit clinics, pharmacies, and drug shops) is widespread. According to the 2013-2014 Demographic and Health Survey (DHS), among children with fever, _ percent report seeking care in the public sector and _ percent in the private sector (source)[https://www.severemalaria.org/countries/democratic-republic-of-congo/drc-health-system].
+DRC is one of the poorest countries in the world (source)[https://www.cia.gov/the-world-factbook/countries/congo-democratic-republic-of-the/]. The health care system in DRC is highly dependent of private actors. Care-seeking and treatment for malaria in the private sector (including non-profit and faith-based facilities, for-profit clinics, pharmacies, and drug shops) is widespread. According to the 2013-2014 Demographic and Health Survey (DHS), among children with fever, 49 percent report seeking care in the public sector and 47 percent in the private sector (source)[https://www.severemalaria.org/countries/democratic-republic-of-congo/drc-health-system].
 
 
 ### Aims/Objective
@@ -70,8 +70,11 @@ df_research <- df_research %>%
 
 # create an object called mean_mother_age
 mean_mother_age <- mean(df_research$mother_age, na.rm = TRUE)
+mean_mother_age
 
 ```
+
+The mean age of mothers is 30.
 
 This dataset contains `r df_col_num` columns.
 This dataset contains `r df_row_num` columns.
@@ -86,21 +89,45 @@ df_research <- df_research %>%
   mutate(neonatology_admission_baby_1 = tolower(neonatology_admission_baby_1)) %>% 
   # filter out entries that are wrong
   filter(neonatology_admission_baby_1 != 'bb lusamba mukeba') %>% 
+  filter(neonatology_admission_baby_1 != 'yes\nno') %>% 
   # edit the cases that seem fixable
   mutate(neonatology_admission_baby_1 = case_when(
     neonatology_admission_baby_1 == 'oiui' ~ 'oui',
-    TRUE ~ neonatology_admission_baby_1
-  ))
+    TRUE ~ neonatology_admission_baby_1))
 
 # calculate who was and was not submitted to neonatology (this table should only have oui and non)
-
 df_research %>% 
   group_by(neonatology_admission_baby_1) %>% 
   tally()
+  #was submitted to neonatology: 27
+  #was not submitted to neonatology: 19
 
 # once you get here you can do this again for neonatology_admission_baby_2 and then calculate how many children in total were and were not submitted to neonatology
+df_research <- df_research %>% 
+  # lower all the words in the column
+  mutate(neonatology_admission_baby_2 = tolower(neonatology_admission_baby_2)) %>% 
+  # filter out entries that are wrong
+  filter(neonatology_admission_baby_2 != 'bb lusamba mukeba') %>% 
+  filter(neonatology_admission_baby_1 != 'yes\nno') %>% 
+  # edit the cases that seem fixable
+  mutate(neonatology_admission_baby_2 = case_when(
+    neonatology_admission_baby_2 == 'oiui' ~ 'oui',
+    TRUE ~ neonatology_admission_baby_2
+  ))
+
+# calculate who was and was not submitted to neonatology (this table should only have oui and non)
+df_research %>% 
+  group_by(neonatology_admission_baby_2) %>% 
+  tally()
+  #was submitted to neonatology: 30
+  #was not submitted to neonatology: 16
 
 ```
 
+
+
 # download data
 df <- read_csv('https://mbrudd.com/drc_data/DRC_data_v3.csv')
+
+
+
